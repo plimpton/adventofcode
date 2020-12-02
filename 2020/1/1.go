@@ -13,15 +13,18 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    list := strings.Split(string(input), "\n")
+    list := strings.Split(string(input), "\r\n")
     for _, vs := range list {
-        var v int64
-        v, _ = strconv.ParseInt(vs, 10, 0)
+        var v int
+        v, err = strconv.Atoi(vs)
+        if err != nil {
+            log.Fatalf("Error parsing string to int: '%s' - %s", vs, err)
+        }
         fmt.Println(v)
-        expected := int64(2020 - v)
+        expected := 2020 - v
         for _, vis := range list {
-            var vi int64
-            vi, _ = strconv.ParseInt(vis, 10, 0)
+            var vi int
+            vi, _ = strconv.Atoi(vis)
             fmt.Println(vi)
             if vi == expected {
                 answer := v * vi
